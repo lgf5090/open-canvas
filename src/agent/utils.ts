@@ -1,6 +1,8 @@
 import { isArtifactCodeContent } from "@/lib/artifact_content_types";
 import { BaseStore, LangGraphRunnableConfig } from "@langchain/langgraph";
 import { ArtifactCodeV3, ArtifactMarkdownV3, Reflections } from "../types";
+import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatOpenAI } from "@langchain/openai";
 
 export const formatReflections = (
   reflections: Reflections,
@@ -145,4 +147,45 @@ export const getModelNameAndProviderFromConfig = (
   }
 
   throw new Error("Unknown model provider");
+};
+
+export const initChatModelWithConfig = async (
+  modelName: string,
+  config: {
+    temperature?: number;
+    maxTokens?: number;
+    modelProvider: string;
+  }
+) => {
+  switch (config.modelProvider) {
+    case "openai":
+      return new ChatOpenAI({
+        modelName: modelName,
+        temperature: config.temperature ?? 0,
+        maxTokens: config.maxTokens,
+        configuration: {
+          baseURL: process.env.OPENAI_BASE_URL,
+        },
+      });
+    case "anthropic":
+      return new ChatAnthropic({
+        modelName: modelName,
+        temperature: config.temperature ?? 0,
+        maxTokens: config.maxTokens,
+      });
+    // ... handle other providers ...
+    default:
+      throw new Error(`Unknown model provider: ${config.modelProvider}`);
+  }
+};
+
+export const initChatModel = async (
+  modelName: string, 
+  config: {
+    temperature?: number;
+    maxTokens?: number;
+    modelProvider: string;
+  }
+) => {
+  return initChatModelWithConfig(modelName, config);
 };
