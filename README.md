@@ -128,3 +128,42 @@ There are three main labels:
 - `fullstack`: This label is added to issues which require touching both the frontend and agent code.
 
 If you have questions about contributing, please reach out to me via email: `brace(at)langchain(dot)dev`. For general bugs/issues with the code, please [open an issue on GitHub](https://github.com/langchain-ai/open-canvas/issues/new).
+
+
+# Run in Docker
+
+```bash
+pip install -U langgraph-cli
+langgraph dockerfile -c langgraph.json Dockerfile
+docker build -t open-canvas .
+docker image ls
+```
+
+## Run in Windows
+### Docker
+```pwsh
+docker run `
+  --env-file .env `
+  -p 57318:8000 `
+  -e REDIS_URI="redis://host.docker.internal:6379/0" `
+  -e DATABASE_URI="postgresql://postgres:xxx@host.docker.internal:5432/postgres" `
+  -e LANGSMITH_API_KEY="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" `
+  open-canvas
+```
+
+## Run in Linux
+```bash
+docker run \
+  --env-file .env \
+  -p 57318:8000 \
+  -e REDIS_URI="redis://host.docker.internal:6379/0" \
+  -e DATABASE_URI="postgresql://postgres:xxx@host.docker.internal:5432/postgres" \
+  -e LANGSMITH_API_KEY="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" \
+  open-canvas
+```
+
+### Docker Compose
+```bash
+docker compose up
+```
+
