@@ -3,6 +3,8 @@ import { BaseStore, LangGraphRunnableConfig } from "@langchain/langgraph";
 import { ArtifactCodeV3, ArtifactMarkdownV3, Reflections } from "../types";
 import { ChatAnthropic } from "@langchain/anthropic";
 import { ChatOpenAI } from "@langchain/openai";
+import { ChatFireworks } from "@langchain/community/chat_models/fireworks";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
 export const formatReflections = (
   reflections: Reflections,
@@ -172,8 +174,23 @@ export const initChatModelWithConfig = async (
         modelName: modelName,
         temperature: config.temperature ?? 0,
         maxTokens: config.maxTokens,
+        anthropicApiUrl: process.env.ANTHROPIC_BASE_URL,
       });
-    // ... handle other providers ...
+    case "google-genai":
+      return new ChatGoogleGenerativeAI({
+        modelName: modelName,
+        temperature: config.temperature ?? 0,
+        maxOutputTokens: config.maxTokens,
+        apiKey: process.env.GOOGLE_API_KEY,
+        baseUrl: process.env.GOOGLE_API_BASE_URL,
+      });
+    case "fireworks":
+      return new ChatFireworks({
+        modelName: modelName,
+        temperature: config.temperature ?? 0,
+        maxTokens: config.maxTokens,
+        apiKey: process.env.FIREWORKS_API_KEY,
+      });
     default:
       throw new Error(`Unknown model provider: ${config.modelProvider}`);
   }
