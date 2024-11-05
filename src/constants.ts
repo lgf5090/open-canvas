@@ -28,6 +28,10 @@ export const OPENAI_MODELS = [
     name: "gpt-4o-mini",
     label: "GPT-4o mini",
   },
+  {
+    name: "gpt-4o",
+    label: "GPT-4o",
+  },
 ];
 export const ANTHROPIC_MODELS = [
   {
@@ -38,6 +42,10 @@ export const ANTHROPIC_MODELS = [
   //   name: "claude-3-5-sonnet-20240620",
   //   label: "Claude 3.5 Sonnet",
   // },
+  {
+    name: "claude-3-5-sonnet-20241022",
+    label: "Claude 3.5 Sonnet",
+  },
 ];
 export const FIREWORKS_MODELS = [
   {
@@ -50,6 +58,10 @@ export const GEMINI_MODELS = [
   {
     name: "gemini-1.5-flash",
     label: "Gemini 1.5 Flash",
+  },
+  {
+    name: "gemini-1.5-pro",
+    label: "Gemini 1.5 Pro",
   },
 ];
 export const DEFAULT_MODEL_NAME: ALL_MODEL_NAMES = "gpt-4o-mini";
