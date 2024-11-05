@@ -131,6 +131,8 @@ If you have questions about contributing, please reach out to me via email: `bra
 
 
 # Run in Docker
+- https://langchain-ai.github.io/langgraph/how-tos/deploy-self-hosted/
+- https://www.youtube.com/watch?v=HF2-ixKFrTM
 
 ```bash
 pip install -U langgraph-cli
